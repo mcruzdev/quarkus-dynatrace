@@ -1,6 +1,6 @@
 # quarkus-dynatrace
 
-Project created to demonstrate the use of `quarkus-micrometer-opentelemetry` extension sending metric to OTEL collector + Dynatrace.
+Project created to demonstrate the use of `quarkus-micrometer-opentelemetry` extension in native mode sending telemetry to Dynatrace OTEL collector.
 
 ## Creating a Dynatrace account (Free Trial 15 days)
 
@@ -28,7 +28,7 @@ You can get your Dynatrace Tenant URL by accessing the Dynatrace dashboard, and 
 > [!IMPORTANT]
 > For example: `https://abc12345.live.dynatrace.com`, in this case your tenant is `abc12345`.
 
-Now, replace the placeholders `<dynatrace tenant>` and `<dynatrace token>` in the `k8s/otel-configmap.yaml` file with your actual Dynatrace tenant and token values.
+Now, replace the placeholders `<dynatrace tenant>` and `<dynatrace token>` in the [`k8s/otel-configmap.yaml`](./k8s/otel-configmap.yaml) file with your actual Dynatrace tenant and token values.
 
 ## Building quarkus-dynatrace app
 
@@ -40,7 +40,7 @@ Now, replace the placeholders `<dynatrace tenant>` and `<dynatrace token>` in th
 First of all, we need to build our application in a native mode, to do it, you need to run:
 
 ```shell
-mvn clean package -Dnative
+./mvnw clean package -Dnative
 ```
 
 After the build successfully finished, you will find the native executable in the `target` folder.
@@ -54,7 +54,8 @@ docker build -f src/main/docker/Dockerfile.native -t matheuscruzdev/quarkus-dyna
 ce:0.1.0 .
 ```
 
-NOTE: Replace `matheuscruzdev` with your Docker Hub username or any preferred name for the image.
+>[!NOTE]
+> Replace `matheuscruzdev` with your Docker Hub username or any preferred name for the image.
 
 ## Publishing Docker image
 
@@ -64,7 +65,8 @@ To publish the Docker image to a Docker registry, you can use the following comm
 docker push <username>/quarkus-dynatrace:0.1.0
 ```
 
-NOTE: Make sure you are logged in to your Docker registry using `docker login` before pushing the image.
+> [!NOTE]
+> Make sure you are logged in to your Docker registry using `docker login` before pushing the image.
 
 ## Running quarkus-dynatrace app with KinD
 
@@ -76,7 +78,10 @@ To run the `quarkus-dynatrace` application with KinD (Kubernetes in Docker), you
 kind create cluster --name quarkus-dynatrace-cluster
 ```
 
-NOTE: You need to have KinD installed on your machine. You can find the installation instructions [here](https://kind.sigs.k8s.io/docs/user/quick-start/).
+> [!IMPORTANTE] 
+> You need to have KinD installed on your machine. 
+> 
+> You can find the installation instructions [here](https://kind.sigs.k8s.io/docs/user/quick-start/).
 
 2. Apply the Kubernetes deployment and service configuration:
 
@@ -89,7 +94,7 @@ kubectl apply -f k8s/
 ### Check if the pods are running
 
 ```shell
-☁  quarkus-dynatrace  kubectl get pods                                       
+$ kubectl get pods                                       
 NAME                                        READY   STATUS    RESTARTS   AGE
 dynatrace-otel-collector-69486c4d57-fdrpr   1/1     Running   0          33s
 quarkus-dynatrace-app-57866fd6d4-4wqvp      1/1     Running   0          33s
