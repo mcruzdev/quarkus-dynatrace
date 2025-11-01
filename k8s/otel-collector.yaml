@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dynatrace-otel-collector
+  labels:
+    app: dynatrace-otel-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dynatrace-otel-collector
+  template:
+    metadata:
+      labels:
+        app: dynatrace-otel-collector
+    spec:
+      containers:
+        - name: otel-collector
+          image: ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:0.39.0
+          ports:
+              - containerPort: 4317   # OTLP gRPC
+              - containerPort: 4318   # OTLP HTTP
+          volumeMounts:
+            - name: otel-config-vol
+              mountPath: /etc/otelcol/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: otel-config-vol
+          configMap:
+            name: dynatrace-otel-collector-config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dynatrace-otel-collector
+  labels:
+    app: dynatrace-otel-collector
+spec:
+  selector:
+    app: dynatrace-otel-collector
+  ports:
+    - protocol: TCP
+      port: 4317
+      targetPort: 4317
+      name: otlp-grpc
+    - protocol: TCP
+      port: 4318
+      targetPort: 4318
+      name: otlp-http
+  type: ClusterIP

@@ -1,0 +1,33 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dynatrace-otel-collector-config
+data:
+  config.yaml: |
+    # /etc/otelcol/config.yaml
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+    exporters:
+      debug:
+        verbosity: detailed
+      otlphttp:
+        endpoint: https://<dynatrace tenant>.live.dynatrace.com/api/v2/otlp
+        headers:
+          Authorization: "Api-Token <dynatrace token>"
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [otlphttp]
+        metrics:
+          receivers: [otlp]
+          exporters: [otlphttp]
+        logs:
+          receivers: [otlp]
+          exporters: [otlphttp]
