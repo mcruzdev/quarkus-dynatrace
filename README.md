@@ -139,5 +139,5 @@ Go to `Logs` in the left menu and click on `+ Add logs`.
 
 # For more information
 
-See the official Quarkus documentation about [Observability](https://pt.quarkus.io/guides/observability).
-See the official Dynatrace documentation about [Dynatrace Opentelemetry Collector](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector).
+* See the official Quarkus documentation about [Observability](https://pt.quarkus.io/guides/observability).
+* See the official Dynatrace documentation about [Dynatrace Opentelemetry Collector](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector).
