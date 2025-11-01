@@ -78,7 +78,7 @@ To run the `quarkus-dynatrace` application with KinD (Kubernetes in Docker), you
 kind create cluster --name quarkus-dynatrace-cluster
 ```
 
-> [!IMPORTANTE] 
+> [!IMPORTANT] 
 > You need to have KinD installed on your machine. 
 > 
 > You can find the installation instructions [here](https://kind.sigs.k8s.io/docs/user/quick-start/).
